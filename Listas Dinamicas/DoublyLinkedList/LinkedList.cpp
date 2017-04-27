@@ -85,19 +85,35 @@ int LinkedList::search(string s)
 bool LinkedList::insertBegin(string s)
 {
 	Node<string>* novo_no = new Node<string>(s);
-	Node<string>* next = this->head->getNext();
-	Node<string>* head = this->head;
-    novo_no->setPrevious(this->head);
-    novo_no->setNext(next);
-    this->head->setNext(novo_no);
+
+
+
+    novo_no->   setPrevious(this->head);
+
+    novo_no->setNext(this->head->getNext());
+
     this->head->getNext()->setPrevious(novo_no);
-    return false;
+
+    this->head->setNext(novo_no);
+
+
+ 
+
+
+    this->quantity = this->quantity + 1;
+    return true;
 }
 
 bool LinkedList::insertEnd(string s)
 {
-	std::cout << "\tERRO - Método insertEnd ainda não foi implementado.\n";
-    return false;
+	Node<string>* novo_no = new Node<string>(s);
+	this->tail->getPrevious()->setNext(novo_no);
+	novo_no->setPrevious(this->tail->getPrevious());
+	novo_no->setNext(this->tail);
+	this->tail->setPrevious(novo_no);
+	this->quantity = this->quantity +1;
+
+    return true;
 }
 
 bool LinkedList::insert(int i, string s)
@@ -114,8 +130,14 @@ string LinkedList::removeEnd(void)
 
 string LinkedList::removeBegin(void)
 {
-    std::cout << "\tERRO - Método removeBegin ainda não foi implementado.\n";
-    return "";
+	Node<string>* first_no = this->head->getNext();
+	Node<string>* prox = this->head->getNext()->getNext();
+	
+	this->head->setNext(prox);
+
+	prox->setPrevious(this->head);
+	this->quantity = this->quantity - 1;
+	return "";
 }
 
 string LinkedList::remove(int indice)
